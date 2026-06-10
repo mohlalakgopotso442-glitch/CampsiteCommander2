@@ -1,11 +1,9 @@
 package com.example.campsitecommander2
 
-import android.R
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
-import android.widget.ImageView
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.ComponentActivity
@@ -15,71 +13,76 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.campsitecommander2.ui.theme.CampsiteCommander2Theme
-import java.util.logging.Handler
 
-class MainActivity : ComponentActivity() {
+class MainScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             CampsiteCommander2Theme {
-
-                    var itemNames = arrayOf("Tent", "Marshmallows", "Flashlight")
-                            var categories = arrayOf("Shelter", "Food", "Safety")
-                    var quantities = arrayOf(1, 3, 2)
-                    var comments = arrayOf("4-person waterproof", "For S'mores Mega size", "Check batteries AA")
-
-                    fun getTotalItems(): Int{
-                        var total = 0
-                        for (q in quantities){
-                            total += q
-                        }
-                        return total
-                    }
-                }
-
                 val layout = LinearLayout(this).apply {
                     orientation = LinearLayout.VERTICAL
                     gravity = Gravity.CENTER
-                    setBackgroundColor(Color.parseColor("#1B262C"))
+                    setBackgroundColor(Color.parseColor("#0F4C75"))
+                    setPadding(50, 50, 50, 50)
                     layoutParams = LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.MATCH_PARENT
                     )
                 }
 
-                val logo = ImageView(this).apply {
-                    setImageResource(android.R.drawable.ic_dialog_map)
-                    layoutParams =
-                        LinearLayout.LayoutParams(300, 300)
-                }
-
                 val title = TextView(this).apply {
                     text = "Campsite Commander"
-                    textSize = 28f
+                    textSize = 26f
                     gravity = Gravity.CENTER
-                    setPadding(0, 40, 0 ,0)
                 }
-                layout.addView(logo)
-                layout.addView(title)
-                setContentView(layout)
 
-                android.os.Handler().postDelayed({
-                    startActivity(Intent(this, MainActivity::class.java))
-                    finish()
-                }, 3000)
+                val tvTotal = TextView(this).apply {
+
+                    text = "Total Items Packed: $ {Data.getTotalItems()}"
+                    textSize = 20f
+                    setTextColor(Color.parseColor("BBE1FA"))
+                    gravity = Gravity.CENTER
+                    setPadding(0, 40, 0, 40)
+                }
+                val btnAdd = android.widget.Button(this).apply {
+                    text = "Add Gear"
+                    setBackgroundColor(Color.parseColor("#3282B8"))
+                    textSize = 18f
+                    setInClickListener {
+                        startActivity(Intent(this@MainScreen, DetailedView::class.java))
+                    }
+                }
+                layout.addView(title)
+                layout.addView(tvTotal)
+                layout.addView(btnAdd)
+                setContentView(layout)
             }
+            fun onResume(){
+                super.onResume()
+                recreate()
+
+                }
+            }
+
         }
     }
 
-
-
+private fun Button.setInClickListener(function: () -> Unit) {
+    TODO("Not yet implemented")
+}
 
 
 
