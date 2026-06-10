@@ -9,7 +9,7 @@ Detailed view screen that display button for full list of gear with details and 
 Comments and error handling per rubric
 
 How to Run
-Clone:
+Clone:https://github.com/mohlalakgopotso442-glitch/CampsiteCommander2
 Open in Android Studio
 Click Run ▶️
 
